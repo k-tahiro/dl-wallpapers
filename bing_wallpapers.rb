@@ -59,7 +59,6 @@ base_page.css('#categories > ul > li.choice.kbSelect').each_with_index{|li,i|
         index += 1
     }
 
-    label_link = session.find("#categories > ul > li:nth-child(#{i+1})")
     label_link.click
     sleep (1)
 }
