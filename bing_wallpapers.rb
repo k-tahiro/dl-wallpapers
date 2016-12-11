@@ -1,5 +1,5 @@
 require 'open-uri'
-require 'FileUtils'
+require 'fileutils'
 require 'nokogiri'
 require 'capybara'
 require 'capybara/poltergeist'
