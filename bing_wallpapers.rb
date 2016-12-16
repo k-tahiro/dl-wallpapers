@@ -20,7 +20,6 @@ def init_page(session, url)
     session.visit url
     expand_button = session.find('#categories > div.sectionBar > div.expandButton.kbSelect')
     expand_button.click
-    session.execute_script('window.scroll(0,1000);')
 end
 
 #poltergistの設定
@@ -41,6 +40,8 @@ base_page.css('#categories > ul > li.choice.kbSelect').each{|li|
     label = li.css('.label').text
     label_link = session.find(li.css_path)
     label_link.click
+    sleep (1)
+    session.execute_script('window.scroll(0,1000);')
     sleep (1)
     category_page = Nokogiri::HTML.parse(session.html)
 
