@@ -29,7 +29,7 @@ end
 Capybara.default_selector = :css
 session = Capybara::Session.new(:poltergeist)
 #自由にUser-Agent設定してください。
-session.driver.headers = { 'User-Agent' => 'Mozilla/5.0 (Macintosh; Intel Mac OS X)' } 
+session.driver.headers = { 'User-Agent' => 'Mozilla/5.0 (Macintosh; Intel Mac OS X)' }
 
 url = 'http://www.bing.com/gallery/'
 init_page(session, url)
@@ -41,8 +41,16 @@ base_page.css('#categories > ul > li.choice.kbSelect').each{|li|
     label_link = session.find(li.css_path)
     label_link.click
     sleep (1)
-    session.execute_script('window.scroll(0,1000);')
-    sleep (1)
+    last_height = session.evaluate_script('document.body.scrollHeight;')
+    loop do
+        session.execute_script('window.scrollTo(0, document.body.scrollHeight);')
+        sleep (1)
+        new_height = session.evaluate_script('document.body.scrollHeight;')
+        if new_height == last_height
+            break
+        end
+        last_height = new_height
+    end
     category_page = Nokogiri::HTML.parse(session.html)
 
     category_page.css('#grid > .tile.kbSelect').each{|image_div|
